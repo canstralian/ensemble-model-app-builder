@@ -3,3 +3,6 @@ google-generativeai
 google-generativeai
 python-dotenv
 streamlit
+pylint
+pytest
+black
