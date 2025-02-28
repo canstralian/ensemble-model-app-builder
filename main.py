@@ -9,10 +9,13 @@ load_dotenv()
 
 # Configure Google Generative AI
 api_key = os.getenv("GOOGLE_API_KEY")
-if api_key:
+if api_key and api_key != "your_api_key_here":
     genai.configure(api_key=api_key)
 else:
-    st.error("Google API key not found. Please add it to your .env file as GOOGLE_API_KEY.")
+    st.warning("Google API key not configured. Please add your API key to the .env file as GOOGLE_API_KEY.")
+    st.info("You can get a Google API key from https://ai.google.dev/")
+    if st.button("I've added my API key"):
+        st.experimental_rerun()
 
 def generate_app_code(framework, task):
     """
