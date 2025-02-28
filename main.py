@@ -6,6 +6,10 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from ui.streamlit_ui import render_header, render_framework_selector, render_task_selector, render_footer
 
+# Initialize session state for API key
+if 'api_key' not in st.session_state:
+    st.session_state['api_key'] = None
+
 # Add retry mechanism for better stability
 def with_retry(func, max_retries=3, delay=1):
     for attempt in range(max_retries):
@@ -39,8 +43,18 @@ if api_key and api_key != "your_api_key_here":
 else:
     st.warning("Google API key not configured. Please add your API key to the .env file as GOOGLE_API_KEY.")
     st.info("You can get a Google API key from https://ai.google.dev/")
-    if st.button("I've added my API key"):
-        st.info("Please refresh the page to continue.")
+    
+    # Create a placeholder for the API key input
+    api_key_input = st.text_input("Or enter your Google API key here:", type="password")
+    if api_key_input:
+        try:
+            with st.spinner("Configuring API connection..."):
+                with_retry(lambda: genai.configure(api_key=api_key_input))
+            st.success("Google API key configured successfully!")
+            # Store the key in session state for current session
+            st.session_state['api_key'] = api_key_input
+        except Exception as e:
+            st.error(f"Error configuring Google API key: {e}")
 
 def generate_app_code(framework, task):
     """
@@ -51,6 +65,10 @@ def generate_app_code(framework, task):
     Returns:
         str: Generated Python code or an error message.
     """
+    # Check if API is configured
+    if not api_key and not st.session_state.get('api_key'):
+        return "API key not configured. Please provide a Google API key to generate code."
+    
     try:
         # Construct the prompt
         prompt = (
