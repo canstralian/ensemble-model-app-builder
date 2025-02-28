@@ -1,23 +1,19 @@
 import pytest
-from main import function_to_test  # Replace with actual functions/classes from main
+from main import generate_app_code  # Replace with the actual function you want to test
 
 # Test for valid input
 @pytest.mark.parametrize("input_data, expected_output", [
-    # Add tuples of input data and expected output here
-    # (input_data_1, expected_output_1),
-    # (input_data_2, expected_output_2),
+    ("Interactive Data Explorer", "expected code output for this task"),  # Add the realistic expected outputs
+    ("Simple Linear Regression", "expected code output for this task"),
 ])
 def test_function_to_test_valid(input_data, expected_output):
-    assert function_to_test(input_data) == expected_output
+    assert generate_app_code("Streamlit", input_data) == expected_output
 
 # Test for invalid input
 @pytest.mark.parametrize("input_data", [
-    # Add invalid input cases here
-    # invalid_input_1,
-    # invalid_input_2,
+    None,  # Invalid case
+    "",    # Invalid case
 ])
 def test_function_to_test_invalid(input_data):
-    with pytest.raises(ValueError):  # or other expected exceptions
-        function_to_test(input_data)
-
-# Add more test functions as needed for comprehensive coverage
+    with pytest.raises(ValueError):  # Adjust the exception type as needed
+        generate_app_code("Streamlit", input_data)
