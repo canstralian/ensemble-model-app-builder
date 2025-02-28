@@ -4,6 +4,14 @@ port = 8080
 headless = true
 enableCORS = false
 enableXsrfProtection = false
+address = "0.0.0.0"
 
 [browser]
 gatherUsageStats = false
+
+[runner]
+magicEnabled = true
+fastRerenderEnabled = true
+
+[theme]
+base = "light"
