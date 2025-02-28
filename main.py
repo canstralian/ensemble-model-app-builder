@@ -5,6 +5,7 @@ import os
 API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=API_KEY)
 
+
 def generate_app_code(framework, task):
     """
     Generates Python code for the selected framework and task using the AI model.
@@ -16,16 +17,15 @@ def generate_app_code(framework, task):
     """
     try:
         # Construct the prompt
-        prompt = (
-            f"Create a {framework} app for the following task: {task}. "
-            "Provide the full Python code and ensure it is functional."
-        )
+        prompt = (f"Create a {framework} app for the following task: {task}. "
+                  "Provide the full Python code and ensure it is functional.")
         # Send the prompt to the model
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
         return f"An error occurred: {e}"
+
 
 def main():
     # Streamlit UI
@@ -35,14 +35,13 @@ def main():
         st.write(
             "This tool generates Python code for a Streamlit or Gradio app based on a selected task. "
             "It uses the Gemini 1.5 flash model to generate the code. "
-            "You can select a predefined task or enter a custom one."
-        )
+            "You can select a predefined task or enter a custom one.")
         st.write("This project is based on the initial work of:")
-        st.markdown(
-            "Louie F. Cervantes, M.Eng (Information Engineering) \n\n"
-            "West Visayas State University"
+        st.markdown("Louie F. Cervantes, M.Eng (Information Engineering) \n\n"
+                    "West Visayas State University")
+        st.write(
+            "This version has been created and expanded upon by **WhackTheJacker** to utilize multiple models for enhanced code generation."
         )
-        st.write("This version has been created and expanded upon by **WhackTheJacker** to utilize multiple models for enhanced code generation.")
 
     # Step 1: Select the framework
     framework = st.selectbox("Select a framework:", ["Streamlit", "Gradio"])
@@ -75,16 +74,6 @@ def main():
             else:
                 st.error("Failed to generate the app code. Please try again.")
 
-    st.markdown("""
-    ## Acknowledgements
-
-    * Hugging Face for providing the Spaces platform and Transformers library.
-    * Google for Gemini Pro.
-    * Salesforce for CodeT5.
-    * BigScience for T0.
-    * Streamlit and Gradio communities.
-    * Louie F. Cervantes, M.Eng for the foundational work.
-    """)
 
 if __name__ == "__main__":
     main()
