@@ -1,55 +1,79 @@
+
 import streamlit as st
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-API_KEY = os.getenv("GEMINI_API_KEY")
-if not API_KEY:
-    st.error("No Gemini API key found. Please set the GEMINI_API_KEY environment variable.")
-    st.stop()
-
-genai.configure(api_key=API_KEY)
-
+# Configure Google Generative AI
+api_key = os.getenv("GOOGLE_API_KEY")
+if api_key:
+    genai.configure(api_key=api_key)
+else:
+    st.error("Google API key not found. Please add it to your .env file as GOOGLE_API_KEY.")
 
 def generate_app_code(framework, task):
     """
-    Generates Python code for the selected framework and task using the AI model.
+    Generate code for a Streamlit or Gradio app based on the selected task.
+    
     Args:
-        framework (str): The selected framework ('Streamlit' or 'Gradio').
-        task (str): The task for which the app will be generated.
+        framework (str): The framework to use ('Streamlit' or 'Gradio')
+        task (str): The task description
+        
     Returns:
-        str: Generated Python code or an error message.
+        str: The generated code
     """
     try:
+        # Initialize the Gemini model
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
         # Construct the prompt
-        prompt = (f"Create a {framework} app for the following task: {task}. "
-                  "Provide the full Python code and ensure it is functional.")
-        # Send the prompt to the model
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        prompt = f"""
+        Create a Python {framework} application that accomplishes the following task:
+        {task}
+        
+        Requirements:
+        1. The code should be complete and runnable
+        2. Include necessary imports
+        3. Use best practices for {framework}
+        4. Include comments explaining the code
+        5. Handle errors gracefully
+        
+        Return only the Python code without any explanation or markdown formatting.
+        """
+        
+        # Generate the response
         response = model.generate_content(prompt)
-        return response.text
+        
+        # Extract the code from the response
+        if hasattr(response, 'text'):
+            return response.text.strip()
+        else:
+            return None
+            
     except Exception as e:
-        return f"An error occurred: {e}"
-
+        st.error(f"Error generating code: {str(e)}")
+        return None
 
 def main():
-    # Streamlit UI
+    st.set_page_config(page_title="Multi-Model App Builder", layout="wide")
+    
     st.title("Multi-Model App Builder")
-
+    
     with st.expander("ℹ️ About"):
         st.write(
             "This tool generates Python code for a Streamlit or Gradio app based on a selected task. "
             "It uses the Gemini 1.5 flash model to generate the code. "
-            "You can select a predefined task or enter a custom one.")
-        st.write("This project is based on the initial work of:")
-        st.markdown("Louie F. Cervantes, M.Eng (Information Engineering) \n\n"
-                    "West Visayas State University")
-        st.write(
-            "This version has been created and expanded upon by **WhackTheJacker** to utilize multiple models for enhanced code generation."
+            "You can select a predefined task or enter a custom one."
         )
+        st.write("This project is based on the initial work of:")
+        st.markdown(
+            "Louie F. Cervantes, M.Eng (Information Engineering) \n\n"
+            "West Visayas State University"
+        )
+        st.write("This version has been created and expanded upon by **WhackTheJacker** to utilize multiple models for enhanced code generation.")
 
     # Step 1: Select the framework
     framework = st.selectbox("Select a framework:", ["Streamlit", "Gradio"])
@@ -82,6 +106,16 @@ def main():
             else:
                 st.error("Failed to generate the app code. Please try again.")
 
+    st.markdown("""
+    ## Acknowledgements
+
+    * Hugging Face for providing the Spaces platform and Transformers library.
+    * Google for Gemini Pro.
+    * Salesforce for CodeT5.
+    * BigScience for T0.
+    * Streamlit and Gradio communities.
+    * Louie F. Cervantes, M.Eng for the foundational work.
+    """)
 
 if __name__ == "__main__":
     try:
