@@ -21,52 +21,61 @@ models:
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Models: Gemini Pro 2.0, CodeT5-small, T0_3B](https://img.shields.io/badge/Models-Gemini%20Pro%202.0%2C%20CodeT5--small%2C%20T0_3B-green)](https://huggingface.co/whackthejacker/ensemble-model-app-builder)
 
-👀 **A Multi-Model AI-Powered App Builder for Streamlit and Gradio Apps**
+👀 **Enhanced Multi-Model AI-Powered App Builder for Streamlit and Gradio Applications**
 
-This Hugging Face Space provides a user-friendly interface to generate Streamlit and Gradio applications using the combined power of multiple large language models. With this tool, you can quickly prototype and build interactive web applications without extensive coding knowledge.
+Discover a more intuitive and seamless way to create Streamlit and Gradio applications with our Hugging Face Space. Harness the combined prowess of several large language models, letting you develop interactive web tools swiftly and with minimal coding experience.
 
-## About
+## Overview
 
-This tool generates Python code for a Streamlit or Gradio app based on a selected task. It uses a combination of Gemini Pro 2.0, Salesforce/codet5-small, and bigscience/T0_3B models to generate the code. You can select a predefined task or enter a custom one.
-This project is based on the initial work of:
+Leverage this tool to automatically generate Python code tailored for either Streamlit or Gradio apps. Our system integrates the capabilities of the Gemini Pro 2.0, Salesforce/codet5-small, and bigscience/T0_3B models to craft your code. Begin by picking a predefined task or entering a custom directive.
+
+Originally conceptualized by:
 **Louie F. Cervantes, M.Eng (Information Engineering)**
 West Visayas State University
-This version has been created and expanded upon by **WhackTheJacker** to utilize multiple models for enhanced code generation.
-## Features
-* **Multi-Model Code Generation:** Leverages Gemini Pro 2.0, Salesforce/codet5-small, and bigscience/T0_3B for robust code generation.
-* **Intuitive Interface:** Easily describe your desired application functionality, and let the AI generate the code for you.
-* **Streamlit and Gradio Support:** Choose between generating Streamlit or Gradio applications based on your preference.
-* **Rapid Prototyping:** Accelerate your development process by quickly generating and iterating on application ideas.
+This iteration, refined and expanded by **WhackTheJacker**, maximizes the utility of multiple models to boost code generation accuracy and variety.
 
-## How to Use
+## Key Features
 
-1.  **Describe Your App:** Enter a clear and concise description of the application you want to build.
-2.  **Select Framework:** Choose whether you want to generate a Streamlit or Gradio app.
-3.  **Generate Code:** Click the "Generate" button to let the AI create the Python code.
-4.  **Review and Customize:** Review the generated code and make any necessary adjustments.
-5.  **Run the App:** Copy the generated code and run it in your local environment or deploy it to a platform like Streamlit Sharing or Hugging Face Spaces.
+* **Advanced Multi-Model Code Generation:** Utilizes Gemini Pro 2.0, Salesforce/codet5-small, and bigscience/T0_3B for enhanced and reliable code synthesis.
+* **User-Friendly Interface:** Simply describe your desired application functionality, and let the AI handle the rest.
+* **Support for Streamlit and Gradio:** Opt for the framework that best suits your requirements.
+* **Efficient Prototyping:** Condense your development timeline with rapid code generation and iterative features.
 
-## Models Used
+## Step-by-Step Guide
 
-* **Gemini Pro 2.0:** For general-purpose code generation and understanding natural language descriptions.
-* **Salesforce/codet5-small:** For code-specific tasks and improving the quality of the generated code.
-* **bigscience/T0_3B:** For natural language understanding and instruction following.
-## Example Usage
-"Create a Streamlit app that displays a simple text input and outputs the entered text in uppercase."
-## Getting Started Locally
-1.  Clone this repository.
-2.  Install the required dependencies: `pip install streamlit gradio transformers`
-3.  Run the Streamlit app: `streamlit run app.py`
-## Contributing
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-## License
-This project is licensed under the Apache 2.0 License.
-## Acknowledgements
-* Hugging Face for providing the Spaces platform and Transformers library.
-* Google for Gemini Pro.
-* Salesforce for CodeT5.
-* BigScience for T0.
-* Streamlit and Gradio communities.
-* Louie F. Cervantes, M.Eng for the foundational work.
-## Contact
-If you have any questions or feedback, please feel free to contact me.
+1. **App Description:** Provide a clear and concise outline of the application you wish to construct.
+2. **Framework Selection:** Decide whether to generate a Streamlit or Gradio application.
+3. **Initiate Code Generation:** Press the "Generate" button and watch the AI draft your Python script.
+4. **Customize and Validate:** Examine the code output and adjust as required.
+5. **Deployment or Execution:** Run the code on a local setup or deploy using services like Streamlit Sharing or Hugging Face Spaces.
+
+## Model Summary
+
+- **Gemini Pro 2.0:** Offers extensive code generation and adept natural language interpretation.
+- **Salesforce/codet5-small:** Specializes in refining code and enhancing output quality.
+- **bigscience/T0_3B:** Excels in understanding natural language commands and execution.
+
+## Sample Scenario
+"Devise a Streamlit app that accepts user input and showcases the input transformed into uppercase letters."
+
+## Setting Up Locally
+1. Clone the repository to your local machine.
+2. Install dependencies with: `pip install streamlit gradio transformers`
+3. Start the application: `streamlit run app.py`
+
+## Open Source Contribution
+We welcome contributions! Encountered a bug or have enhancement ideas? Feel free to open an issue or contribute via pull request.
+
+## Licensing
+This software is distributed under the Apache 2.0 License.
+
+## Special Thanks
+* To Hugging Face for the Spaces platform and Transformers library.
+* Google, for developing Gemini Pro.
+* Salesforce, for the innovative CodeT5.
+* BigScience for their contribution of T0.
+* The dedicated communities behind Streamlit and Gradio.
+* Louie F. Cervantes, M.Eng, for laying the project groundwork.
+
+## Reach Out
+For any questions or feedback, don't hesitate to contact us.
