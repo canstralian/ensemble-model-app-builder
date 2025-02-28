@@ -31,4 +31,4 @@ author = 25868489
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "streamlit run main.py --server.address=0.0.0.0 --server.port=8080"
+args = "streamlit run main.py --server.address=0.0.0.0 --server.port=8080 --server.headless=true"
