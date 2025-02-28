@@ -1,8 +1,16 @@
 import streamlit as st
 import google.generativeai as genai
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    st.error("No Gemini API key found. Please set the GEMINI_API_KEY environment variable.")
+    st.stop()
+
 genai.configure(api_key=API_KEY)
 
 
@@ -76,4 +84,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        # Handle exceptions gracefully
+        st.error(f"An error occurred: {str(e)}")
