@@ -15,5 +15,20 @@ run = ["sh", "-c", "streamlit run main.py --server.address=0.0.0.0 --server.port
 deploymentTarget = "cloudrun"
 
 [[ports]]
+localPort = 8080
+externalPort = 8080
+
+[[ports]]
 localPort = 8501
 externalPort = 80
+
+[workflows]
+runButton = "Run Streamlit"
+
+[[workflows.workflow]]
+name = "Run Streamlit"
+author = 25868489
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "streamlit run main.py --server.address=0.0.0.0 --server.port=8080"
