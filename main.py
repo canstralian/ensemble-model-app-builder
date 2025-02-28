@@ -1,12 +1,27 @@
 
 import os
-from dotenv import load_dotenv
+import time
 import streamlit as st
+from dotenv import load_dotenv
 import google.generativeai as genai
 from ui.streamlit_ui import render_header, render_framework_selector, render_task_selector, render_footer
 
+# Add retry mechanism for better stability
+def with_retry(func, max_retries=3, delay=1):
+    for attempt in range(max_retries):
+        try:
+            return func()
+        except Exception as e:
+            if attempt == max_retries - 1:
+                raise e
+            time.sleep(delay)
+
 # Set page configuration
-st.set_page_config(page_title="Multi-Model App Builder", layout="wide")
+st.set_page_config(
+    page_title="Multi-Model App Builder", 
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 # Load environment variables
 load_dotenv()
@@ -15,10 +30,12 @@ load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 if api_key and api_key != "your_api_key_here":
     try:
-        genai.configure(api_key=api_key)
+        with st.spinner("Configuring API connection..."):
+            with_retry(lambda: genai.configure(api_key=api_key))
         st.success("Google API key configured successfully!")
     except Exception as e:
         st.error(f"Error configuring Google API key: {e}")
+        st.info("The app will continue to run with limited functionality.")
 else:
     st.warning("Google API key not configured. Please add your API key to the .env file as GOOGLE_API_KEY.")
     st.info("You can get a Google API key from https://ai.google.dev/")

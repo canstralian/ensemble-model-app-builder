@@ -9,11 +9,5 @@ address = "0.0.0.0"
 [browser]
 gatherUsageStats = false
 
-[runner]
-magicEnabled = true
-
 [theme]
 base = "light"
-
-[server.enableWebsocketCompression]
-value = false
