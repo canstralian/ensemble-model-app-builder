@@ -2,7 +2,7 @@
 [server]
 port = 8080
 headless = true
-enableCORS = false
+enableCORS = true
 enableXsrfProtection = false
 address = "0.0.0.0"
 
@@ -14,3 +14,6 @@ magicEnabled = true
 
 [theme]
 base = "light"
+
+[server.enableWebsocketCompression]
+value = false
