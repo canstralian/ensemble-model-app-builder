@@ -58,6 +58,16 @@ def generate_app_code(framework, task):
         return None
 
 def main():
+    """
+    The main function that sets up the Streamlit app and handles user interactions.
+    
+    This function:
+    1. Sets the page configuration for the Streamlit app.
+    2. Displays the app title and an information expander.
+    3. Allows the user to select a framework (Streamlit or Gradio) and a predefined task or enter a custom task.
+    4. Generates the app code based on the user's selections and displays it.
+    5. Handles any exceptions that may occur during the code generation process.
+    """
     st.set_page_config(page_title="Multi-Model App Builder", layout="wide")
     
     st.title("Multi-Model App Builder")
