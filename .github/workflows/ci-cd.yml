@@ -1,0 +1,57 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'  # Specify your Python version
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: flake8 . --count --show-source --statistics
+
+      - name: Run tests with pytest
+        run: pytest
+
+  deploy:
+    needs: build-and-test  # Only run if build-and-test passes
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Only deploy on pushes to main
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy to Hugging Face Spaces
+        uses: huggingface/spaces-action@v1
+        with:
+          username: ${{ secrets.HF_USERNAME }}  # Replace with your Hugging Face username
+          token: ${{ secrets.HF_TOKEN }}      # Replace with your Hugging Face token
+          repo: ${{ secrets.HF_SPACE_NAME }}   # Replace with your Space name
