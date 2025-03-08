@@ -1,0 +1,98 @@
+
+/* Main styles for the Multi-Model App Builder */
+.title-container {
+    background-color: #f0f2f6;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    border-left: 5px solid #ff4b4b;
+}
+
+.header-title {
+    color: #ff4b4b;
+    font-weight: bold;
+}
+
+.app-description {
+    color: #262730;
+    margin-top: 1rem;
+}
+
+.framework-card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e6e6e6;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.framework-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.task-container {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e6e6e6;
+}
+
+.generate-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.generate-button:hover {
+    background-color: #45a049;
+}
+
+.code-container {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+    border: 1px solid #e6e6e6;
+}
+
+.footer-container {
+    background-color: #f0f2f6;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    text-align: center;
+    border-top: 3px solid #ff4b4b;
+}
+
+.model-badge {
+    display: inline-block;
+    background-color: #e7f3fe;
+    color: #1e88e5;
+    padding: 0.2rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin: 0.2rem;
+}
+
+/* Two-column layout for desktop */
+.side-by-side {
+    display: flex;
+    gap: 20px;
+}
+
+.column {
+    flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .side-by-side {
+        flex-direction: column;
+    }
+}

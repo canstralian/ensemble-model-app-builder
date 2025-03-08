@@ -1,19 +1,28 @@
+
 import os
 import time
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
 from ui.streamlit_ui import (
+    load_css,
     render_header,
     render_framework_selector,
     render_task_selector,
+    render_generate_button,
+    render_code_display,
     render_footer,
 )
 
-# Initialize session state for API key
+# Initialize session state for API key and generated code
 if "api_key" not in st.session_state:
     st.session_state["api_key"] = None
 
+if "generated_code" not in st.session_state:
+    st.session_state["generated_code"] = None
+
+if "selected_framework" not in st.session_state:
+    st.session_state["selected_framework"] = None
 
 # Add retry mechanism for better stability
 def with_retry(func, max_retries=3, delay=1):
@@ -29,9 +38,13 @@ def with_retry(func, max_retries=3, delay=1):
 # Set page configuration
 st.set_page_config(
     page_title="Multi-Model App Builder",
+    page_icon="🛠️",
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Load custom CSS
+load_css()
 
 # Load environment variables
 load_dotenv()
@@ -47,13 +60,13 @@ if api_key and api_key != "your_api_key_here":
         st.error(f"Error configuring Google API key: {e}")
         st.info("The app will continue to run with limited functionality.")
 else:
-    st.warning(
+    st.sidebar.warning(
         "Google API key not configured. Please add your API key to the .env file as GOOGLE_API_KEY."
     )
-    st.info("You can get a Google API key from https://ai.google.dev/")
+    st.sidebar.info("You can get a Google API key from https://ai.google.dev/")
 
     # Create a placeholder for the API key input
-    api_key_input = st.text_input("Or enter your Google API key here:", type="password")
+    api_key_input = st.sidebar.text_input("Or enter your Google API key here:", type="password")
     if api_key_input:
         try:
             with st.spinner("Configuring API connection..."):
@@ -98,21 +111,43 @@ def main():
     # Render header using the UI module
     render_header()
 
-    # Step 1: Select the framework
-    framework = render_framework_selector()
+    # Create a two-column layout for the main content
+    col1, col2 = st.columns([2, 1])
 
-    # Step 2: Select a task
-    task = render_task_selector()
+    with col1:
+        # Step 1: Select the framework
+        framework = render_framework_selector()
+        st.session_state["selected_framework"] = framework
+        
+        # Step 2: Select a task
+        task = render_task_selector()
+        
+        # Step 3: Generate the app code
+        if render_generate_button():
+            with st.spinner("Generating code with AI..."):
+                app_code = generate_app_code(framework, task)
+                if app_code:
+                    st.session_state["generated_code"] = app_code
+                    st.success("Code generated successfully!")
+                else:
+                    st.error("Failed to generate the app code. Please try again.")
 
-    # Step 3: Generate the app code
-    if st.button("Generate App Code"):
-        with st.spinner("Generating code..."):
-            app_code = generate_app_code(framework, task)
-            if app_code:
-                st.subheader("Generated Code")
-                st.code(app_code, language="python")
-            else:
-                st.error("Failed to generate the app code. Please try again.")
+    with col2:
+        st.sidebar.markdown("### App Preview")
+        st.sidebar.info(f"Framework: {st.session_state['selected_framework'] if st.session_state['selected_framework'] else 'Not selected'}")
+        
+        # Add sample images or icons for visual appeal
+        st.sidebar.markdown("### Sample Apps")
+        st.sidebar.image("https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-darktext.png", width=200)
+        st.sidebar.image("https://gradio.app/images/logo.svg", width=200)
+        
+        # Add useful tips
+        st.sidebar.markdown("### Tips")
+        st.sidebar.info("• Be specific in your task description\n• Run the generated code in a new file\n• Experiment with different frameworks")
+
+    # Display the generated code
+    if st.session_state["generated_code"]:
+        render_code_display(st.session_state["generated_code"])
 
     # Render footer
     render_footer()

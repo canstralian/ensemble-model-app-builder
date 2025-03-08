@@ -1,0 +1,8 @@
+
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" rx="20" fill="#f0f2f6"/>
+  <path d="M40 50 L160 50 L160 150 L40 150 Z" fill="#ff4b4b" stroke="#262730" stroke-width="5"/>
+  <circle cx="100" cy="100" r="30" fill="#ffffff" stroke="#262730" stroke-width="5"/>
+  <path d="M85 100 L115 100 M100 85 L100 115" stroke="#262730" stroke-width="5"/>
+  <text x="50" y="180" font-family="Arial" font-weight="bold" font-size="20" fill="#262730">App Builder</text>
+</svg>
