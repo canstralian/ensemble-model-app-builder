@@ -1,14 +1,19 @@
-
 import os
 import time
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
-from ui.streamlit_ui import render_header, render_framework_selector, render_task_selector, render_footer
+from ui.streamlit_ui import (
+    render_header,
+    render_framework_selector,
+    render_task_selector,
+    render_footer,
+)
 
 # Initialize session state for API key
-if 'api_key' not in st.session_state:
-    st.session_state['api_key'] = None
+if "api_key" not in st.session_state:
+    st.session_state["api_key"] = None
+
 
 # Add retry mechanism for better stability
 def with_retry(func, max_retries=3, delay=1):
@@ -20,11 +25,12 @@ def with_retry(func, max_retries=3, delay=1):
                 raise e
             time.sleep(delay)
 
+
 # Set page configuration
 st.set_page_config(
-    page_title="Multi-Model App Builder", 
+    page_title="Multi-Model App Builder",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # Load environment variables
@@ -41,9 +47,11 @@ if api_key and api_key != "your_api_key_here":
         st.error(f"Error configuring Google API key: {e}")
         st.info("The app will continue to run with limited functionality.")
 else:
-    st.warning("Google API key not configured. Please add your API key to the .env file as GOOGLE_API_KEY.")
+    st.warning(
+        "Google API key not configured. Please add your API key to the .env file as GOOGLE_API_KEY."
+    )
     st.info("You can get a Google API key from https://ai.google.dev/")
-    
+
     # Create a placeholder for the API key input
     api_key_input = st.text_input("Or enter your Google API key here:", type="password")
     if api_key_input:
@@ -52,9 +60,10 @@ else:
                 with_retry(lambda: genai.configure(api_key=api_key_input))
             st.success("Google API key configured successfully!")
             # Store the key in session state for current session
-            st.session_state['api_key'] = api_key_input
+            st.session_state["api_key"] = api_key_input
         except Exception as e:
             st.error(f"Error configuring Google API key: {e}")
+
 
 def generate_app_code(framework, task):
     """
@@ -66,9 +75,11 @@ def generate_app_code(framework, task):
         str: Generated Python code or an error message.
     """
     # Check if API is configured
-    if not api_key and not st.session_state.get('api_key'):
-        return "API key not configured. Please provide a Google API key to generate code."
-    
+    if not api_key and not st.session_state.get("api_key"):
+        return (
+            "API key not configured. Please provide a Google API key to generate code."
+        )
+
     try:
         # Construct the prompt
         prompt = (
@@ -82,16 +93,17 @@ def generate_app_code(framework, task):
     except Exception as e:
         return f"An error occurred: {e}"
 
+
 def main():
     # Render header using the UI module
     render_header()
-    
+
     # Step 1: Select the framework
     framework = render_framework_selector()
-    
+
     # Step 2: Select a task
     task = render_task_selector()
-    
+
     # Step 3: Generate the app code
     if st.button("Generate App Code"):
         with st.spinner("Generating code..."):
@@ -101,9 +113,10 @@ def main():
                 st.code(app_code, language="python")
             else:
                 st.error("Failed to generate the app code. Please try again.")
-    
+
     # Render footer
     render_footer()
+
 
 if __name__ == "__main__":
     try:
