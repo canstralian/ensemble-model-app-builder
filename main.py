@@ -55,6 +55,7 @@ if api_key and api_key != "your_api_key_here":
     try:
         with st.spinner("Configuring API connection..."):
             with_retry(lambda: genai.configure(api_key=api_key))
+        st.session_state["api_key"] = api_key
         st.success("Google API key configured successfully!")
     except Exception as e:
         st.error(f"Error configuring Google API key: {e}")
@@ -71,11 +72,11 @@ else:
         try:
             with st.spinner("Configuring API connection..."):
                 with_retry(lambda: genai.configure(api_key=api_key_input))
-            st.success("Google API key configured successfully!")
-            # Store the key in session state for current session
             st.session_state["api_key"] = api_key_input
+            st.success("Google API key configured successfully!")
         except Exception as e:
             st.error(f"Error configuring Google API key: {e}")
+            st.session_state["api_key"] = None
 
 
 def generate_app_code(framework, task):
@@ -88,7 +89,7 @@ def generate_app_code(framework, task):
         str: Generated Python code or an error message.
     """
     # Check if API is configured
-    if not api_key and not st.session_state.get("api_key"):
+    if not st.session_state.get("api_key"):
         return (
             "API key not configured. Please provide a Google API key to generate code."
         )
@@ -99,10 +100,15 @@ def generate_app_code(framework, task):
             f"Create a {framework} app for the following task: {task}. "
             "Provide the full Python code and ensure it is functional."
         )
-        # Send the prompt to the model
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(prompt)
-        return response.text
+        # Send the prompt to the model using retry mechanism
+        def get_response():
+            model = genai.GenerativeModel("gemini-1.5-flash")
+            return model.generate_content(prompt)
+        
+        response = with_retry(get_response)
+        if hasattr(response, 'text'):
+            return response.text
+        return "Error: Unable to generate code. Invalid response format."
     except Exception as e:
         return f"An error occurred: {e}"
 
@@ -133,17 +139,17 @@ def main():
                     st.error("Failed to generate the app code. Please try again.")
 
     with col2:
-        st.sidebar.markdown("### App Preview")
-        st.sidebar.info(f"Framework: {st.session_state['selected_framework'] if st.session_state['selected_framework'] else 'Not selected'}")
+        st.markdown("### App Preview")
+        st.info(f"Framework: {st.session_state['selected_framework'] if st.session_state['selected_framework'] else 'Not selected'}")
         
         # Add sample images or icons for visual appeal
-        st.sidebar.markdown("### Sample Apps")
-        st.sidebar.image("https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-darktext.png", width=200)
-        st.sidebar.image("https://gradio.app/images/logo.svg", width=200)
+        st.markdown("### Sample Apps")
+        st.image("https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-darktext.png", width=200)
+        st.image("https://gradio.app/images/logo.svg", width=200)
         
         # Add useful tips
-        st.sidebar.markdown("### Tips")
-        st.sidebar.info("• Be specific in your task description\n• Run the generated code in a new file\n• Experiment with different frameworks")
+        st.markdown("### Tips")
+        st.info("• Be specific in your task description\n• Run the generated code in a new file\n• Experiment with different frameworks")
 
     # Display the generated code
     if st.session_state["generated_code"]:
