@@ -1,17 +1,18 @@
-
 import os
 import time
+
+import google.generativeai as genai
 import streamlit as st
 from dotenv import load_dotenv
-import google.generativeai as genai
+
 from ui.streamlit_ui import (
     load_css,
-    render_header,
-    render_framework_selector,
-    render_task_selector,
-    render_generate_button,
     render_code_display,
     render_footer,
+    render_framework_selector,
+    render_generate_button,
+    render_header,
+    render_task_selector,
 )
 
 # Initialize session state for API key and generated code
@@ -23,6 +24,7 @@ if "generated_code" not in st.session_state:
 
 if "selected_framework" not in st.session_state:
     st.session_state["selected_framework"] = None
+
 
 # Add retry mechanism for better stability
 def with_retry(func, max_retries=3, delay=1):
@@ -67,7 +69,9 @@ else:
     st.sidebar.info("You can get a Google API key from https://ai.google.dev/")
 
     # Create a placeholder for the API key input
-    api_key_input = st.sidebar.text_input("Or enter your Google API key here:", type="password")
+    api_key_input = st.sidebar.text_input(
+        "Or enter your Google API key here:", type="password"
+    )
     if api_key_input:
         try:
             with st.spinner("Configuring API connection..."):
@@ -100,13 +104,14 @@ def generate_app_code(framework, task):
             f"Create a {framework} app for the following task: {task}. "
             "Provide the full Python code and ensure it is functional."
         )
+
         # Send the prompt to the model using retry mechanism
         def get_response():
             model = genai.GenerativeModel("gemini-1.5-flash")
             return model.generate_content(prompt)
-        
+
         response = with_retry(get_response)
-        if hasattr(response, 'text'):
+        if hasattr(response, "text"):
             return response.text
         return "Error: Unable to generate code. Invalid response format."
     except Exception as e:
@@ -124,10 +129,10 @@ def main():
         # Step 1: Select the framework
         framework = render_framework_selector()
         st.session_state["selected_framework"] = framework
-        
+
         # Step 2: Select a task
         task = render_task_selector()
-        
+
         # Step 3: Generate the app code
         if render_generate_button():
             with st.spinner("Generating code with AI..."):
@@ -140,16 +145,23 @@ def main():
 
     with col2:
         st.markdown("### App Preview")
-        st.info(f"Framework: {st.session_state['selected_framework'] if st.session_state['selected_framework'] else 'Not selected'}")
-        
+        st.info(
+            f"Framework: {st.session_state['selected_framework'] if st.session_state['selected_framework'] else 'Not selected'}"
+        )
+
         # Add sample images or icons for visual appeal
         st.markdown("### Sample Apps")
-        st.image("https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-darktext.png", width=200)
+        st.image(
+            "https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-darktext.png",
+            width=200,
+        )
         st.image("https://gradio.app/images/logo.svg", width=200)
-        
+
         # Add useful tips
         st.markdown("### Tips")
-        st.info("• Be specific in your task description\n• Run the generated code in a new file\n• Experiment with different frameworks")
+        st.info(
+            "• Be specific in your task description\n• Run the generated code in a new file\n• Experiment with different frameworks"
+        )
 
     # Display the generated code
     if st.session_state["generated_code"]:

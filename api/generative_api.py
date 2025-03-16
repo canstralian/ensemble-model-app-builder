@@ -1,6 +1,6 @@
-
 import os
 import google.generativeai as genai
+
 
 def initialize_gemini_api():
     """Initialize the Gemini API with the API key from environment variables."""
@@ -10,14 +10,15 @@ def initialize_gemini_api():
         return True
     return False
 
+
 def generate_code_with_gemini(framework, task):
     """
     Generate code using Gemini model.
-    
+
     Args:
         framework (str): The selected framework ('Streamlit' or 'Gradio').
         task (str): The task description.
-        
+
     Returns:
         str: Generated code or error message.
     """

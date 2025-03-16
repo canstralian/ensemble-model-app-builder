@@ -3,9 +3,9 @@ import requests
 from typing import Optional
 
 
-def use_huggingface_space(text_input: str,
-                          space_url: str,
-                          api_token: Optional[str] = None) -> str:
+def use_huggingface_space(
+    text_input: str, space_url: str, api_token: Optional[str] = None
+) -> str:
     """
     Sends the provided text_input to a Hugging Face Space API for processing.
 
@@ -28,8 +28,11 @@ def use_huggingface_space(text_input: str,
         response.raise_for_status()
 
         result = response.json()
-        if isinstance(result, dict) and "data" in result and isinstance(
-                result["data"], list):
+        if (
+            isinstance(result, dict)
+            and "data" in result
+            and isinstance(result["data"], list)
+        ):
             return str(result["data"][0])
         elif isinstance(result, dict) and "output" in result:
             return str(result["output"])  # Handle different response format
