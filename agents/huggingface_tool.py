@@ -1,6 +1,7 @@
 import os
-import requests
 from typing import Optional
+
+import requests
 
 
 def use_huggingface_space(
