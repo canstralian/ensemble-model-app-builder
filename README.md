@@ -21,61 +21,135 @@ models:
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Models: Gemini Pro 2.0, CodeT5-small, T0_3B](https://img.shields.io/badge/Models-Gemini%20Pro%202.0%2C%20CodeT5--small%2C%20T0_3B-green)](https://huggingface.co/whackthejacker/ensemble-model-app-builder)
 
-👀 **Enhanced Multi-Model AI-Powered App Builder for Streamlit and Gradio Applications**
+⸻
 
-Discover a more intuitive and seamless way to create Streamlit and Gradio applications with our Hugging Face Space. Harness the combined prowess of several large language models, letting you develop interactive web tools swiftly and with minimal coding experience.
+Ensemble Model App Builder
 
-## Overview
+An AI-powered tool that streamlines the creation of Streamlit and Gradio applications by leveraging multiple large language models for efficient and accurate code generation.
 
-Leverage this tool to automatically generate Python code tailored for either Streamlit or Gradio apps. Our system integrates the capabilities of the Gemini Pro 2.0, Salesforce/codet5-small, and bigscience/T0_3B models to craft your code. Begin by picking a predefined task or entering a custom directive.
+⸻
 
-Originally conceptualized by:
-**Louie F. Cervantes, M.Eng (Information Engineering)**
-West Visayas State University
-This iteration, refined and expanded by **WhackTheJacker**, maximizes the utility of multiple models to boost code generation accuracy and variety.
+Project Description
 
-## Key Features
+The Ensemble Model App Builder simplifies the development of interactive web applications by integrating the capabilities of multiple large language models. Users can describe the desired functionality, select their preferred framework (Streamlit or Gradio), and receive generated Python code tailored to their specifications. This approach accelerates prototyping and reduces the need for extensive coding knowledge.
 
-* **Advanced Multi-Model Code Generation:** Utilizes Gemini Pro 2.0, Salesforce/codet5-small, and bigscience/T0_3B for enhanced and reliable code synthesis.
-* **User-Friendly Interface:** Simply describe your desired application functionality, and let the AI handle the rest.
-* **Support for Streamlit and Gradio:** Opt for the framework that best suits your requirements.
-* **Efficient Prototyping:** Condense your development timeline with rapid code generation and iterative features.
+⸻
 
-## Step-by-Step Guide
+Table of Contents
+   •   Installation
+   •   Usage
+   •   Contributing
+   •   License
+   •   Roadmap
+   •   Credits
+   •   Support
+   •   FAQ
 
-1. **App Description:** Provide a clear and concise outline of the application you wish to construct.
-2. **Framework Selection:** Decide whether to generate a Streamlit or Gradio application.
-3. **Initiate Code Generation:** Press the "Generate" button and watch the AI draft your Python script.
-4. **Customize and Validate:** Examine the code output and adjust as required.
-5. **Deployment or Execution:** Run the code on a local setup or deploy using services like Streamlit Sharing or Hugging Face Spaces.
+⸻
 
-## Model Summary
+Installation
+	1.	Clone the Repository:
 
-- **Gemini Pro 2.0:** Offers extensive code generation and adept natural language interpretation.
-- **Salesforce/codet5-small:** Specializes in refining code and enhancing output quality.
-- **bigscience/T0_3B:** Excels in understanding natural language commands and execution.
+git clone https://github.com/canstralian/ensemble-model-app-builder.git
+cd ensemble-model-app-builder
 
-## Sample Scenario
-"Devise a Streamlit app that accepts user input and showcases the input transformed into uppercase letters."
 
-## Setting Up Locally
-1. Clone the repository to your local machine.
-2. Install dependencies with: `pip install streamlit gradio transformers`
-3. Start the application: `streamlit run app.py`
+	2.	Set Up a Virtual Environment:
 
-## Open Source Contribution
-We welcome contributions! Encountered a bug or have enhancement ideas? Feel free to open an issue or contribute via pull request.
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-## Licensing
-This software is distributed under the Apache 2.0 License.
 
-## Special Thanks
-* To Hugging Face for the Spaces platform and Transformers library.
-* Google, for developing Gemini Pro.
-* Salesforce, for the innovative CodeT5.
-* BigScience for their contribution of T0.
-* The dedicated communities behind Streamlit and Gradio.
-* Louie F. Cervantes, M.Eng, for laying the project groundwork.
+	3.	Install Dependencies:
 
-## Reach Out
-For any questions or feedback, don't hesitate to contact us.
+pip install -r requirements.txt
+
+
+	4.	Run the Application:
+
+streamlit run app.py
+
+
+
+⸻
+
+Usage
+	1.	Provide an App Description:
+Enter a clear and concise description of the application you wish to build.
+	2.	Select a Framework:
+Choose between Streamlit and Gradio as your preferred framework.
+	3.	Generate Code:
+Click the “Generate” button to initiate code generation using integrated language models.
+	4.	Review and Customize:
+Examine the generated code and make any necessary adjustments to fit your specific requirements.
+	5.	Deploy or Run Locally:
+Deploy the application using platforms like Streamlit Sharing or Hugging Face Spaces, or run it locally for testing.
+
+⸻
+
+Contributing
+
+Contributions are welcome! To contribute:
+	1.	Fork the Repository
+	2.	Create a Feature Branch:
+
+git checkout -b feature/YourFeature
+
+
+	3.	Commit Your Changes:
+
+git commit -m "Add YourFeature"
+
+
+	4.	Push to the Branch:
+
+git push origin feature/YourFeature
+
+
+	5.	Open a Pull Request
+
+Please ensure your code adheres to the project’s coding standards and includes appropriate tests.
+
+⸻
+
+License
+
+This project is licensed under the MIT License.
+
+⸻
+
+Roadmap
+   •   Enhance model integration for improved code generation accuracy.
+   •   Expand support for additional frameworks beyond Streamlit and Gradio.
+   •   Implement user authentication and project saving features.
+
+⸻
+
+Credits
+   •   Original Concept: Louie F. Cervantes, M.Eng (Information Engineering), West Visayas State University
+   •   Refinement and Expansion: WhackTheJacker
+
+⸻
+
+Support
+
+For support or inquiries, please open an issue on the GitHub repository.
+
+⸻
+
+FAQ
+
+Q: Which language models are integrated into the application?
+A: The application utilizes Gemini Pro 2.0, Salesforce/codet5-small, and bigscience/T0_3B for code generation.
+
+Q: Can I deploy the generated applications to platforms like Hugging Face Spaces?
+A: Yes, the generated code is compatible with deployment platforms such as Hugging Face Spaces and Streamlit Sharing.
+
+Q: Is there a way to save and manage multiple projects within the application?
+A: Currently, project management features are in development. Future updates aim to include user authentication and project saving capabilities.
+
+⸻
+
+For more information and to explore the project further, visit the GitHub repository.
+
+⸻
